@@ -8,8 +8,19 @@ $(document).ready( function ()
         columnWidth: 1
     })
     
-     var isActive = true;
+  var isActive = true;
   var resize = "large";
+
+  var items = 50;
+  while (items-- > 0){
+    if (items == 49){
+      $("#masonry").append("<div class='item'>You may have to toggle if you click the first tile!</div>");
+    }
+    else{
+      $("#masonry").append("<div class='layout-card'></div>");
+    }  
+  }
+
   
   $( "#toggle-size-xlarge" ).on( "click",   function() {
    resize = "xlarge";
