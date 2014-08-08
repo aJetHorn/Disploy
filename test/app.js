@@ -21,9 +21,11 @@ $(document).ready( function ()
 $( "#toggle-size-xlarge" ).on( "click",   function() {
    resize = "xlarge";
 });
+
   $( "#toggle-size-large" ).on( "click", function() {
    resize = "large";
 });
+  
   $( "#toggle-size-medium" ).on( "click", function() {
    resize = "medium";
 });
