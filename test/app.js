@@ -3,7 +3,7 @@ $(document).ready( function ()
     var t = $('#masonry');
     var clicked = false;
     t.masonry({
-        itemSelector:        '.layout-card',
+        itemSelector:        '.display',
         isResizable:        true,
         columnWidth: 1
     })
@@ -28,7 +28,7 @@ $( "#toggle-size-xlarge" ).on( "click",   function() {
    resize = "medium";
 });
     
-    $(".layout-card").on( "click", function() {
+    $(".display").on( "click", function() {
         if (!this.clicked){
             $(this).width(420);
             $(this).height(420);
@@ -48,13 +48,13 @@ $( "#toggle-size-xlarge" ).on( "click",   function() {
     t.sortable({
         distance: 12,
         forcePlaceholderSize: true,
-        items: '.layout-card',
-        placeholder: 'card-sortable-placeholder layout-card',
+        items: '.display',
+        placeholder: 'card-sortable-placeholder display',
         tolerance: 'pointer',
         
         start:  function(event, ui) {            
                  console.log(ui); 
-            ui.item.addClass('dragging').removeClass('layout-card');
+            ui.item.addClass('dragging').removeClass('display');
             if ( ui.item.hasClass('bigun') ) {
                  ui.placeholder.addClass('bigun');
                  }
@@ -66,7 +66,7 @@ $( "#toggle-size-xlarge" ).on( "click",   function() {
                    ui.item.parent().masonry('reload');
                 },
         stop:   function(event, ui) { 
-                   ui.item.removeClass('dragging').addClass('layout-card');
+                   ui.item.removeClass('dragging').addClass('display');
                    ui.item.parent().masonry('reload');
         }
    });
