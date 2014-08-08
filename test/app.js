@@ -14,10 +14,12 @@ $(document).ready( function ()
   var items = 50;
   while (items-- > 0){
     if (items == 49){
-      $("#masonry").append("<div class='item'>You may have to toggle if you click the first tile!</div>");
+      $("#masonry").append("<div class='layout-card'>You may have to toggle if you click the first tile!</div>");
+      t.masonry('reload');
     }
     else{
       $("#masonry").append("<div class='layout-card'></div>");
+      t.masonry('reload');
     }  
   }
 
