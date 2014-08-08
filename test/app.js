@@ -11,20 +11,14 @@ $(document).ready( function ()
   var isActive = true;
   var resize = "large";
 
-  var items = 50;
+  var items = 30;
   while (items-- > 0){
-    if (items == 49){
-      $("#masonry").append("<div class='layout-card'>You may have to toggle if you click the first tile!</div>");
-      t.masonry('reload');
-    }
-    else{
-      $("#masonry").append("<div class='layout-card'></div>");
-      t.masonry('reload');
-    }  
+      $("#masonry").append("<div class='display'></div>");
+        t.masonry('reload');
   }
 
   
-  $( "#toggle-size-xlarge" ).on( "click",   function() {
+$( "#toggle-size-xlarge" ).on( "click",   function() {
    resize = "xlarge";
 });
   $( "#toggle-size-large" ).on( "click", function() {
