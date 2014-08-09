@@ -2,6 +2,7 @@ $(document).ready( function ()
 {
     var t = $('#masonry');
     var clicked = false;
+
     t.masonry({
         itemSelector:        '.display',
         isResizable:        true,
@@ -17,6 +18,11 @@ $(document).ready( function ()
         t.masonry('reload');
   }
 
+  $(".display").children().addBack().off();
+
+$( "#reload-masonry" ).on( "click",   function() {
+   t.masonry('reload');
+});
   
 $( "#toggle-size-xlarge" ).on( "click",   function() {
    resize = "xlarge";
@@ -25,7 +31,7 @@ $( "#toggle-size-xlarge" ).on( "click",   function() {
   $( "#toggle-size-large" ).on( "click", function() {
    resize = "large";
 });
-  
+
   $( "#toggle-size-medium" ).on( "click", function() {
    resize = "medium";
 });

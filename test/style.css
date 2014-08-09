@@ -1,19 +1,32 @@
 #masonry {
        /*margin: px;*/
-  padding: 0px;
 }
 
 .display{
   height: 200px;
   width: 200px;
     display:block;
-    background: #3F607F;;
-    margin: 1px;
     background: #3F607F;
+    margin: 1px;
   /*border: 1px solid #DDD;*/
-  
   border-radius: 5px;
+  overflow: hidden;
 }
+.display img{
+  height: 100%;
+  width: 100%;
+}
+.display iframe{
+height: 100%;
+  width: 100%;
+}
+.dragging img{
+  height: 100%;
+  width: 100%;
+  /*display: none;*/
+  /*pointer-events: none;*/
+}
+
 /*#masonry > li {
     width: 140px;
     display:block;
@@ -54,12 +67,13 @@
   margin-top: -3px;
 }
 
-
 .card-sortable-placeholder {
     background: #aaa !important;
 }
 
-.dragging { opacity: .8; background: #fff !important; }
+.dragging { 
+  opacity: .8; background: #fff !important; 
+}
 
 #bottom{
   background-color: yellow;
