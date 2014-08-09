@@ -18,7 +18,14 @@ $(document).ready( function ()
         t.masonry('reload');
   }
 
-  $(".display").children().addBack().off();
+  $( "#toggle-interactivity" ).on( "click",   function() {
+   $( "iframe" ).toggleClass( "manipulate" );
+   $( ".display" ).toggleClass( "moveCursor" );
+});
+
+  
+
+  //$(".display").children().addBack().off();
 
 $( "#reload-masonry" ).on( "click",   function() {
    t.masonry('reload');
@@ -37,20 +44,46 @@ $( "#toggle-size-xlarge" ).on( "click",   function() {
 });
     
     $(".display").on( "click", function() {
-        if (!this.clicked){
-            $(this).width(420);
-            $(this).height(420);
-          //$(this).height(358);
-            this.clicked = true;
-            //item.parent().masonry('reload');
-            t.masonry('reload');
-        }
-        else{
-          $(this).width(140);
-          $(this).height(80);
-            this.clicked = false;
-            t.masonry('reload');
-        }
+
+      if (($(this).width() === 800
+        && resize == "xlarge") || ($(this).width() === 600
+        && resize == "large") || $(this).width() === 400
+        && resize == "medium"){
+          $(this).width(200);
+          $(this).height(200);
+    }
+    else if (resize == "xlarge"){
+          $(this).width(800);
+          $(this).height(800);
+    }
+     else if (resize == "large"){
+          $(this).width(600);
+          $(this).height(600);
+    }
+      else if (resize == "medium"){
+          $(this).width(400);
+          $(this).height(400);
+    }
+    t.masonry('reload');
+
+
+
+
+
+        // if (!this.clicked){
+        //     $(this).width(420);
+        //     $(this).height(420);
+        //   //$(this).height(358);
+        //     this.clicked = true;
+        //     //item.parent().masonry('reload');
+        //     t.masonry('reload');
+        // }
+        // else{
+        //   $(this).width(140);
+        //   $(this).height(80);
+        //     this.clicked = false;
+        //     t.masonry('reload');
+        // }
     })
         
     t.sortable({
