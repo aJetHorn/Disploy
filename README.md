@@ -1,4 +1,5 @@
 aJetHorn.github.io
 ==================
 
-Project Page
+Disploy will be open source for its first stable release.
+Check out incremental progress at disploy.com
