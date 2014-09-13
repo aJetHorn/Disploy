@@ -1,0 +1,28 @@
+Glad you asked.
+
+Disploy is a portmanteau of the words Display and Deploy. I originally conceived this idea as a feature in a graphical math game I was developing. I planned to implement a secret developer console to interact with and manipulate the elements of the game. 
+
+As I gave the concept more thought, I ditched the math game completely and became obsessed with the idea of a developer console for developers- A command line interface (CLI) within a website that could be used to work with different APIs. 
+
+An API playground. A Supercharged Search Bar.
+
+I found my first real inspiration in SparkTab, which was developed by a legendary team from Lehigh University at PennApps in Spring 2013. My intended function and their end-product overlapped somewhat, and what they were able to accomplish in 40 hours served as a proof-of-concept. I knew that what I planned to do on a larger scale was indeed possible. Disploy's multitude of features can be used by the technically adept as well as those just looking to innovate their web browsing experience.
+
+
+Enough History. Learn how to use Disploy. 
+
+The Command Line included on this website isn't as difficult to use as the one that came preinstalled on your desktop. The command syntax, which I call Disploy Logic, attempts to mimic natural language. It's as simple as using a search bar. Display modifies existing tiles, deploy creates new ones, and disploy supports admin features and the functionality of sparktab. A quick peek at the guide and you'll be good to go. And if the feature you're looking for doesn't exist-
+
+
+It will soon. Disploy is open source.
+
+I want people around the world to be able to contribute to this project. If the github repository isn't available at the time you're reading this, fear not- it will be soon. I'm probably in the process of organizing and documenting my code.
+
+
+Contact me.
+
+This might be the first time in my life where I can say We Need to Talk and be taken seriously. Please excuse my sophmoric tendencies- We should talk if you're at all interested in this project or, by some miracle, me. You can email me at address. Use a descriptive title- I get an awful lot of unsolicited stock tips.
+
+
+
+

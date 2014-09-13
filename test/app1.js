@@ -1,6 +1,6 @@
 $(document).ready( function () 
 {
-    var t = $('#masonry');
+    //var grid = $('#masonry');
     var clicked = false;
     var lineNumber = 5;
 
@@ -10,11 +10,20 @@ $(document).ready( function ()
 
     var mode = "interaction"; //selection or interaction
 
-    t.masonry({
-        itemSelector:        '.display',
-        isResizable:        true,
-        columnWidth: 1
-    })
+    // t.masonry({
+    //     itemSelector:        '.display',
+    //     isResizable:        true,
+    //     columnWidth: 1
+    // })
+
+var grid = $('#masonry').packery();
+
+  grid.find('.display').each( function( i, itemElem ) {
+    // make element draggable with Draggabilly
+    var draggie = new Draggabilly( itemElem );
+    // bind Draggabilly events to Packery
+    grid.packery( 'bindDraggabillyEvents', draggie );
+  });
     
   var isActive = true;
   //var resize = "large";
@@ -24,7 +33,8 @@ $(document).ready( function ()
   var items = 30;
   while (items-- > 0){
       $("#masonry").append("<div id='" + idNumber++ + "' class='display'></div>");
-        t.masonry('reload');
+        //grid.packery('reload');
+        grid.packery('reloadItems');
   }
 
   var selectedIds = [];
@@ -655,29 +665,29 @@ function openBlankTab() { //literally just opens a new tab
     //Don't go beneath this line...
     //=============================
         
-    t.sortable({
-        distance: 12,
-        forcePlaceholderSize: true,
-        items: '.display',
-        placeholder: 'card-sortable-placeholder display',
-        tolerance: 'pointer',
+   //  t.sortable({
+   //      distance: 12,
+   //      forcePlaceholderSize: true,
+   //      items: '.display',
+   //      placeholder: 'card-sortable-placeholder display',
+   //      tolerance: 'pointer',
         
-        start:  function(event, ui) {            
-                 console.log(ui); 
-            ui.item.addClass('dragging').removeClass('display');
-            if ( ui.item.hasClass('bigun') ) {
-                 ui.placeholder.addClass('bigun');
-                 }
-             $(".card-sortable-placeholder").width(ui.item.width());
-    $(".card-sortable-placeholder").height(ui.item.height());
-                   ui.item.parent().masonry('reload')
-                },
-        change: function(event, ui) {
-                   ui.item.parent().masonry('reload');
-                },
-        stop:   function(event, ui) { 
-                   ui.item.removeClass('dragging').addClass('display');
-                   ui.item.parent().masonry('reload');
-        }
-   });
+   //      start:  function(event, ui) {            
+   //               console.log(ui); 
+   //          ui.item.addClass('dragging').removeClass('display');
+   //          if ( ui.item.hasClass('bigun') ) {
+   //               ui.placeholder.addClass('bigun');
+   //               }
+   //           $(".card-sortable-placeholder").width(ui.item.width());
+   //  $(".card-sortable-placeholder").height(ui.item.height());
+   //                 ui.item.parent().masonry('reload')
+   //              },
+   //      change: function(event, ui) {
+   //                 ui.item.parent().masonry('reload');
+   //              },
+   //      stop:   function(event, ui) { 
+   //                 ui.item.removeClass('dragging').addClass('display');
+   //                 ui.item.parent().masonry('reload');
+   //      }
+   // });
 })

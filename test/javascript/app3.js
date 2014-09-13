@@ -1,6 +1,9 @@
 $(document).ready( function () 
 {
-    var t = $('#masonry');
+
+    var container = document.querySelector('#grid');
+    var grid = $('#grid').packery();
+
     var clicked = false;
     var lineNumber = 5;
 
@@ -9,22 +12,43 @@ $(document).ready( function ()
     var commandHistory = [];
 
     var mode = "interaction"; //selection or interaction
-
-    t.masonry({
-        itemSelector:        '.display',
-        isResizable:        true,
-        columnWidth: 1
-    })
     
   var isActive = true;
   //var resize = "large";
   var marginSize = 1;
   //var split = false;
   var idNumber = 100;
-  var items = 30;
+  var items = 30; //def 30
+
   while (items-- > 0){
-      $("#masonry").append("<div id='" + idNumber++ + "' class='display'></div>");
-        t.masonry('reload');
+    appendDisplay("<div id='" + idNumber + "' class='display'></div>");
+    idNumber++
+  }
+
+  function appendDisplay(content){
+    $("#grid").append("" + content);
+    bindDragabillyToElement('.display');
+    reloadGrid();
+  }
+
+  function prependDisplay(content){
+    $("#grid").prepend("" + content);
+    bindDragabillyToElement('.display');
+    reloadGrid();
+  }
+
+  function bindDragabillyToElement(element){ 
+    grid.find(element).each( function( i, itemElem ) {
+        var draggie = new Draggabilly( itemElem, {
+          grid: [5, 5] //this will have to be changed at some point
+        });
+        grid.packery( 'bindDraggabillyEvents', draggie );
+    });
+  }
+
+  function reloadGrid(){
+    grid.packery('destroy');
+    grid.packery();
   }
 
   var selectedIds = [];
@@ -60,8 +84,8 @@ $( "#interactionButton" ).on( "click",   function() { //freely interact with dis
 
   //$(".display iframe").css("border-radius", "5px");
 
-$( "#reload-masonry" ).on( "click",   function() {
-   t.masonry('reload');
+$( "#reload-masonry" ).on( "click",   function() { //rename
+   reloadGrid();
 });
 
 $( "#hugeSquareButton" ).on( "click",   function() {
@@ -94,12 +118,13 @@ $( "#largeSquareButton" ).on( "click",   function() {
       $("#infoText").remove();
    }
 
-   $("#masonry").prepend("<div id='infoText' class='display'><h1>Glad you asked.</h1><span>Disploy is a portmanteau of the words Display and Deploy. I originally conceived this idea as a feature in a graphical math game I was developing. I planned to implement a secret developer console to interact with and manipulate the elements of the game. </span><span>As I gave the concept more thought, I ditched the math game completely and became obsessed with the idea of a developer console built for <i>for developers</i>- A command line interface (CLI) within a website that could be used to work with different APIs. </span><h2>An API playground. A Supercharged Search Bar.</h2><span>I found my first real inspiration in SparkTab, which was developed by a legendary team from Lehigh University at PennApps in Spring 2013. My intended function and their end-product overlapped somewhat, and what they were able to accomplish in 40 hours served as a proof-of-concept. Disploy's multitude of features can be used by the technically adept as well as those just looking to innovate their web browsing experience.</span><h2>Enough Talk. Learn how to use Disploy.</h2><span>The Command Line included on this website isn't as difficult to use as the one that came preinstalled on your desktop. The command syntax, which I call Disploy Logic, attempts to mimic natural language. It's as simple as using a search bar. Display modifies existing tiles, deploy creates new ones, and disploy supports admin features and much of the functionality of sparktab. A quick peek at the guide and you'll be good to go. And if the feature you're looking for doesn't exist-</span><h2>It will soon. Disploy is open source.</h2><span>I want people around the world to be able to contribute to this project. If the github repository isn't available at the time you're reading this, fear not- it will be soon. I'm probably in the process of organizing and documenting my code.</span><h2>Contact me.</h2><span>This might be the first time in my life where I can say 'We Need to Talk' and be taken seriously. Please excuse my sophmoric banter- we <i>should</i> talk if you're at all interested in this project or, by some miracle, me. You can email me at TJO216@Lehigh.edu. Use a descriptive title- I get an awful lot of unsolicited stock tips.</span></div>");
+   $("#grid").prepend("<div id='infoText' class='display'><h1>Glad you asked.</h1><span>Disploy is a portmanteau of the words Display and Deploy. I originally conceived this idea as a feature in a graphical math game I was developing. I planned to implement a secret developer console to interact with and manipulate the elements of the game. </span><span>As I gave the concept more thought, I ditched the math game completely and became obsessed with the idea of a developer console built for <i>for developers</i>- A command line interface (CLI) within a website that could be used to work with different APIs. </span><h2>An API playground. A Supercharged Search Bar.</h2><span>I found my first real inspiration in SparkTab, which was developed by a legendary team from Lehigh University at PennApps in Spring 2013. My intended function and their end-product overlapped somewhat, and what they were able to accomplish in 40 hours served as a proof-of-concept. Disploy's multitude of features can be used by the technically adept as well as those just looking to innovate their web browsing experience.</span><h2>Enough Talk. Learn how to use Disploy.</h2><span>The Command Line included on this website isn't as difficult to use as the one that came preinstalled on your desktop. The command syntax, which I call Disploy Logic, attempts to mimic natural language. It's as simple as using a search bar. Display modifies existing tiles, deploy creates new ones, and disploy supports admin features and much of the functionality of sparktab. A quick peek at the guide and you'll be good to go. And if the feature you're looking for doesn't exist-</span><h2>It will soon. Disploy is open source.</h2><span>I want people around the world to be able to contribute to this project. If the github repository isn't available at the time you're reading this, fear not- it will be soon. I'm probably in the process of organizing and documenting my code.</span><h2>Contact me.</h2><span>This might be the first time in my life where I can say 'We Need to Talk' and be taken seriously. Please excuse my sophmoric banter- we <i>should</i> talk if you're at all interested in this project or, by some miracle, me. You can email me at TJO216@Lehigh.edu. Use a descriptive title- I get an awful lot of unsolicited stock tips.</span></div>");
     $("#infoText").width(590 + (marginSize * 4));
     $("#infoText").height(790 + (marginSize * 6));
 
     //$("#about").css('background-color', '#2C3E50');
-    t.masonry('reload');
+    //t.masonry('reload');
+    reloadGrid();
 });
     
 $(document).on( "click", ".display", function() {
@@ -121,7 +146,7 @@ $(document).on( "click", ".display", function() {
     }
     else{
       $(this).prepend("<div class='highlight'> </div>");
-      $(".highlight", this).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '5px'}, 160, "linear")};
+      $(".highlight", this).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '2px'}, 160, "linear")};
       selectedIds.push($(this).attr('id'));  
     }  
         //css("border", "3px solid #9b59b6");
@@ -140,6 +165,28 @@ $(document).on( "click", ".display", function() {
       }
     });
   }
+
+  function removeIdBanner(element){ //removes an id banner
+    console.log("removeId called on " + element);
+    $(element + ".idBanner").remove();
+  }
+
+  function refreshIds(){
+    toggleIds();
+    toggleIds();
+  }
+
+  function refreshIdBanner(element){
+    var i = 2
+    while (i-- > 0)
+    if ($(element + ".idBanner").length <= 0){
+        $(element).prepend("<div class='idBanner'>" + $(element).attr('id') + "</div>");
+      }
+      else{
+        $(element + ".idBanner").remove();
+      }
+
+ }
 
   function toggleSelectionMode(){
    $( "iframe" ).addClass( "selection" );
@@ -165,12 +212,13 @@ $(document).on( "click", ".display", function() {
         $(currentId).height(height);
         $("div.highlight", currentId).remove();
       }
-      t.masonry('reload');
+      //t.masonry('reload');
+      reloadGrid();
     }
     selectedIds = [];
   }
 
-  function split() {
+  function split() { //FIND SPLIT HERE __
     for (var i = 0; i < selectedIds.length; i++){
       var currentId = "#" + selectedIds[i];
       if ($(currentId).length <= 0){
@@ -179,6 +227,7 @@ $(document).on( "click", ".display", function() {
       else{
     var width = $(currentId).width();
     var height = $(currentId).height();
+    removeIdBanner(currentId); //should remove id.. should eliminate problems
     var html = $(currentId).html() + "";
     var newHeight = (height - marginSize*2) / 2;
     var newWidth = (width - marginSize*2) / 2;
@@ -186,7 +235,8 @@ $(document).on( "click", ".display", function() {
     $(currentId).remove();
 
     for (var j = 4; j > 0; j--){
-      $("#masonry").prepend("<div id='" + idNumber + "' class='display'></div>");
+      //$("#grid").prepend("<div id='" + idNumber + "' class='display'></div>");
+      prependDisplay("<div id='" + idNumber + "' class='display'></div>");
       $("#" + (idNumber)).width(newWidth);
       $("#" + (idNumber)).height(newHeight);
       $("#" + (idNumber)).append(html);
@@ -198,7 +248,8 @@ $(document).on( "click", ".display", function() {
       }
 
       idNumber++;
-      t.masonry('reload');
+      reloadGrid();
+      //refreshIds();
       }
     }
   }
@@ -215,7 +266,7 @@ $(document).on( "click", ".display", function() {
     var htmlCode = "";
     for (var i = 0; i < selectedIds.length; i++){
       var currentId = "#" + selectedIds[i];
-      if ($(currentId).length <= 0){
+      if ($(currentId).length <= 0){ //fix this eventually
         //alert("id doesn't exist");
       }
       else{
@@ -235,10 +286,11 @@ $(document).on( "click", ".display", function() {
           largestHeight = elementHeight;
         }
         $(currentId).remove();
-        t.masonry('reload');
+        reloadGrid();
       }
     }
-    $("#masonry").prepend("<div id='" + idNumber + "' class='display'></div>");
+    //$("#grid").prepend("<div id='" + idNumber + "' class='display'></div>");
+    prependDisplay("<div id='" + idNumber + "' class='display'></div>");
       if (mergeType == "Multiply"){
         $("#" + idNumber).width(totalWidth);
         $("#" + idNumber).height(totalHeight);
@@ -250,21 +302,24 @@ $(document).on( "click", ".display", function() {
 
       $("#" + idNumber).append(htmlCode);
       $("div.highlight", "#" + idNumber).remove();
+
+      console.log("idNumber: " + idNumber);
       idNumber++;
       selectedIds = [];
-      t.masonry('reload');
+      refreshIds();
+      reloadGrid();
   }
 
   function deleteDisplay(){
     for (var i = 0; i < selectedIds.length; i++){
       var currentId = "#" + selectedIds[i];
-      if ($(currentId).length <= 0){
-        alert(currentId + " not deleted");
-      }
-      else{
+      // if ($(currentId).length <= 0){ //exists, comment out
+      //   alert(currentId + " not deleted");
+      // }
+      // else{
         $(currentId).remove();
-        t.masonry('reload');
-      }
+        reloadGrid();
+      //}
     }
     selectedIds = [];
   }
@@ -598,27 +653,35 @@ function openBlankTab() { //literally just opens a new tab
 
   else if (cString.indexOf('select ') > -1){
     //select by id or class
-    cStringQuery = cString.replace('select ', '');
+    cStringQuery = cString.replace('select ', ''); //this will just contain ids now
     if (cStringQuery.indexOf('all') > -1){
       cStringQuery = cStringQuery.replace('all', '.display ');
     }
-    if (cStringQuery.indexOf('#') < 0 && cStringQuery.indexOf('.') < 0){
-      cStringQuery = "#" + cStringQuery;
+    while (cStringQuery.trim().length > 0){
+      var currentElementTemp = cStringQuery.split(" ")[0];
+      var currentElement = currentElementTemp;
+
+    if (currentElement.indexOf('#') < 0 && currentElement.indexOf('.') < 0){ //defaults to id if not specified
+      currentElement = "#" + currentElement;
     }
 
-    if ($(".highlight", cStringQuery).length > 0){
-      $("div.highlight", cStringQuery).remove();
+    if ($(".highlight", currentElement).length > 0){
+      $("div.highlight", currentElement).remove();
       for (var i = 0; i < selectedIds.length; i++){
-        if (selectedIds[i] == $(cStringQuery).attr('id')){
-          selectedIds.pop($(cStringQuery).attr('id')); 
+        if (selectedIds[i] == $(currentElement).attr('id')){
+          selectedIds.pop($(currentElement).attr('id')); 
         }
       }     
     }
     else{
-      $(cStringQuery).prepend("<div class='highlight'> </div>");
-      $(".highlight", cStringQuery).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '5px'}, 160, "linear")
+      $(currentElement).prepend("<div class='highlight'> </div>");
+      $(".highlight", currentElement).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '2px'}, 160, "linear")
       };
-      selectedIds.push($(cStringQuery).attr('id'));  
+      selectedIds.push($(currentElement).attr('id'));  //this doesn't work for "all"
+
+      cStringQuery = cStringQuery.replace(currentElementTemp, '');
+      cStringQuery = cStringQuery.trim();
+    }
   }  
 
   else if (cString.indexOf('toggle ids') > -1 || cString.indexOf('ids') > -1 || cString.indexOf('show ids') > -1){
@@ -633,7 +696,7 @@ function openBlankTab() { //literally just opens a new tab
     toggleSelectionMode();
   }
 
-  else if (cString.indexOf('delete') > -1){
+  else if (cString.indexOf('delete') > -1 || cString.indexOf('del') > -1 || cString.indexOf('remove') > -1 || cString.indexOf('rm') > -1){
     deleteDisplay();
   }
 
@@ -649,35 +712,24 @@ function openBlankTab() { //literally just opens a new tab
     openBlankTab();
   }
 
+  else if (cString.indexOf('split') > -1 || cString.indexOf('spl') > -1){ //just opens a blank tab, doesn't focus on it
+    split();
+  }
+
+  else if (cString.indexOf('merge') > -1){ //just opens a blank tab, doesn't focus on it
+    cString.replace('merge', '');
+    if (cString.indexOf('m') > -1 || cString.indexOf('mult') > -1 || cString.indexOf('multiply') > -1){
+      merge("Multiply");
+    }
+    else{ 
+      //if (cString.indexOf('l') > -1 || cString.indexOf('largest') > -1){
+      merge("Largest");
+    }
+  }
+
+  //UPDATE SHOWS IDS
+
 
  }
 
-    //Don't go beneath this line...
-    //=============================
-        
-    t.sortable({
-        distance: 12,
-        forcePlaceholderSize: true,
-        items: '.display',
-        placeholder: 'card-sortable-placeholder display',
-        tolerance: 'pointer',
-        
-        start:  function(event, ui) {            
-                 console.log(ui); 
-            ui.item.addClass('dragging').removeClass('display');
-            if ( ui.item.hasClass('bigun') ) {
-                 ui.placeholder.addClass('bigun');
-                 }
-             $(".card-sortable-placeholder").width(ui.item.width());
-    $(".card-sortable-placeholder").height(ui.item.height());
-                   ui.item.parent().masonry('reload')
-                },
-        change: function(event, ui) {
-                   ui.item.parent().masonry('reload');
-                },
-        stop:   function(event, ui) { 
-                   ui.item.removeClass('dragging').addClass('display');
-                   ui.item.parent().masonry('reload');
-        }
-   });
 })
