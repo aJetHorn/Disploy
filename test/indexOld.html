@@ -1,0 +1,75 @@
+<html>
+
+<head>
+	<title>Disploy | Dynamic API Manipulation CLI</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>  
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <script src="app.js"></script>
+  <!--script src="http://dl.dropbox.com/u/1000295/jquery.masonry.min.js"></script-->
+  <script src="http://masonry.desandro.com/masonry.pkgd.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
+  </head>
+
+
+<div class="page-header">
+   <h1>Disploy // A Project by <a href="http://www.linkedin.com/in/tohearn/" target="_blank"><img src="https://avatars3.githubusercontent.com/u/3619262?v=2&s=460"></a></h1>
+   <h6><span>What is this?</span></h6>
+</div>
+<div class="container-fluid" id="top-buttons" style="display: none;">
+<div class="row">
+<div class="btn-group">
+  <button class="btn btn-warning" id="reload-masonry">Reload Masonry</button>
+  <button class="btn btn-warning" id="reload-page">Reload Page</button>
+  <button class="btn btn-warning" id="interactionButton">Interaction Mode</button>
+  <button class="btn btn-warning" id="selectionButton">Selection Mode</button>
+  <button class="btn btn-warning" id="showHideIdsButton">Show/Hide Ids</button>
+  <button class="btn btn-info" id="mergeButtonMultiply">Merge Tiles (Multiply)</button>
+  <button class="btn btn-info" id="mergeButtonLargest">Merge Tiles (Largest)</button>
+  <button class="btn btn-info" id="splitButton">Split Tile(s)</button>
+  <button class="btn btn-success" id="hugeSquareButton">Square 4x</button>
+  <button class="btn btn-success" id="largeSquareButton">Square 3x</button>
+  <button class="btn btn-success" id="mediumSquareButton">Square 2x</button>
+  <button class="btn btn-success" id="mediumRectangleButton">Rectangle 2x</button>
+  <button class="btn btn-success" id="normalSizeButton">Normal</button>
+  <button class="btn btn-danger" id="resetAllButton">Reset All (Size)</button>
+  <button class="btn btn-danger" id="deleteButton">Delete</button>
+  </div>
+</div>
+</div>
+<div id="masonry">
+	<div class="display" id="1">
+		<img src="http://asia.olympus-imaging.com/products/dslr/e520/sample/images/sample_03.jpg">	
+	</div>
+	<div class="display" id="2">
+		<iframe src="//www.youtube.com/embed/k7bwil9dT7U?version=3&showinfo=0&controls=0&rel=0"></iframe>	
+	</div>
+	<div class="display" id="3">
+		<iframe src="//www.youtube.com/embed/OJwa9PZCYdE?version=3&showinfo=0&controls=0&rel=0"></iframe>	
+	</div>
+	<div class="display" id="4">
+		<iframe src="//www.youtube.com/embed/HcyyCi2b2AY?version=3&showinfo=0&controls=0&rel=0&start=87"></iframe>	
+</div>
+
+
+</div>
+<div id="bottom">
+  <div id="console">
+    <span>1&nbsp;&nbsp; Welcome to Disploy</span><br>
+    <span>2&nbsp;&nbsp; Type console to toggle this window</span><br>
+    <span>3&nbsp;&nbsp; span 3</span><br>
+    <span>4&nbsp;&nbsp; span 4</span><br>
+  </div>
+  <div id="disployCLI">
+    <input type="text" name="CLI" id="CLIEntry" placeholder="display delete 100" spellcheck="false" autofocus>
+  </div>
+</div>
+</html>
