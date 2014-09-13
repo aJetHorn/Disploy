@@ -397,10 +397,12 @@ function openBlankTab() { //literally just opens a new tab
   //Some of the error checking and general flow is a little loose in this version
   cString = cString.toLowerCase();
 
-  commandHistory.push(cString);
+  commandHistory.push(cString); //note that we only want to push commands to the command history
   currentHistoryIndex = commandHistory.length;
-  $("#console").append("<span>" + lineNumber++ + "&nbsp;&nbsp;&nbsp;" + cString +  "</span><br>");
-  $("#console").scrollTop(1500); //this is a hack to auto scroll to bottom
+  if (cString == ""){
+    cString = "-No Command Entered-";
+  }
+  logToConsole(cString); 
 
   if (cString.length >= 6 && cString.substring(0,5) == "display"){
     alert("display");
@@ -419,6 +421,23 @@ function openBlankTab() { //literally just opens a new tab
     disployParser(cString);
   }
 
+ }
+
+ function logToConsole(cString){ //logs a message to the console
+  var spaceString = "&nbsp;&nbsp;&nbsp;";
+  var leftMarginAmt = "0px";
+  if (lineNumber > 999){
+    leftMarginAmt = "-18px";
+  }
+  else if (lineNumber > 99){
+    leftMarginAmt = "-12px";
+  }
+  else if (lineNumber > 9){
+    leftMarginAmt = "-6px";
+  }
+
+  $("#console").append("<span style=\"margin-left:" + leftMarginAmt + "\">" + lineNumber++ + spaceString + cString +  "</span><br>");
+  $("#console").scrollTop(1500); //this is a hack to auto scroll to bottom
  }
 
  function disployParser(cString){
