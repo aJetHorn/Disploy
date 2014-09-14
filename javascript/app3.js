@@ -63,6 +63,7 @@ $( "#interactionButton" ).on( "click",   function() { //freely interact with dis
 
     $( "#showHideIdsButton" ).on( "click",   function() {
       toggleIds();
+
     });
 
   $( "#splitButton" ).on( "click",   function() {
@@ -141,27 +142,40 @@ $(document).on( "click", ".display", function() {
       for (var i = 0; i < selectedIds.length; i++){
         if (selectedIds[i] == $(this).attr('id')){
           selectedIds.pop($(this).attr('id')); 
+          logToConsole("Deselected " + "#" + $(this).attr('id'));
         }
       }     
     }
     else{
       $(this).prepend("<div class='highlight'> </div>");
-      $(".highlight", this).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '2px'}, 160, "linear")};
-      selectedIds.push($(this).attr('id'));  
+      $(".highlight", this).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '2px'}, 160, "linear");
+      selectedIds.push($(this).attr('id'));
+      logToConsole("Selected " + "#" +  $(this).attr('id'));  
+      }
     }  
         //css("border", "3px solid #9b59b6");
     //$(this).css("border-color", "#999");
   })
   
   function toggleIds(){
+    var messageLogged = false; //this is sloppy, consider refactoring
     $( "div.display" ).each(function( index ) {
       //appened class
       
       if ($("div.idBanner", this).length <= 0){
+        if (!messageLogged){
+          messageLogged = true;
+          logToConsole("Ids shown");
+        }
         $(this).prepend("<div class='idBanner'>" + $(this).attr('id') + "</div>");
       }
       else{
+        if (!messageLogged){
+          messageLogged = true;
+          logToConsole("Ids hidden");
+        }
         $("div.idBanner", this).remove();
+
       }
     });
   }
@@ -225,6 +239,7 @@ $(document).on( "click", ".display", function() {
         alert("id doesn't exist");
       }
       else{
+        logToConsole("Split " + currentId);
     var width = $(currentId).width();
     var height = $(currentId).height();
     removeIdBanner(currentId); //should remove id.. should eliminate problems
@@ -245,6 +260,7 @@ $(document).on( "click", ".display", function() {
       if ($("div.idBanner", "#" + idNumber).length > 0){
         $("div.idBanner", "#" + idNumber).remove();
         $("#" + idNumber).prepend("<div class='idBanner'>" + $("#" + idNumber).attr('id') + "</div>");
+        logToConsole("Created " + idNumber);
       }
 
       idNumber++;
@@ -319,6 +335,7 @@ $(document).on( "click", ".display", function() {
       // else{
         $(currentId).remove();
         reloadGrid();
+        logToConsole("Deleted " + currentId);
       //}
     }
     selectedIds = [];
@@ -491,6 +508,7 @@ function openBlankTab() { //literally just opens a new tab
       openInNewTab("http://www.google.com/maps/search/" + cStringQuery);
     }
     openInNewTab("http://www.google.com/?gws_rd=ssl#q=" + cStringQuery + searchSuffix);
+    logToConsole("Searched Google for " + cStringQuery);
   }
 
   else if (cString.indexOf('bing ')  > -1){
@@ -528,76 +546,95 @@ function openBlankTab() { //literally just opens a new tab
       searchPrefix = "maps/default.aspx";
     }
     openInNewTab("http://www.bing.com/" + searchPrefix + "?q=" + cStringQuery);
+    logToConsole("Searched Bing for " + cStringQuery);
   }
 
   else if (cString.indexOf('dictionary ')  > -1){
     cStringQuery = cString.replace('dictionary ', '');
     openInNewTab("http://www.merriam-webster.com/dictionary/" + cStringQuery);
+    logToConsole("Searched Merriam Webster Dictionary for " + cStringQuery);
   }
 
   else if (cString.indexOf('thesarus ')  > -1){
     cStringQuery = cString.replace('dictionary ', '');
     openInNewTab("http://www.merriam-webster.com/thesarus/" + cStringQuery);
+    logToConsole("Searched Merriam Webster Thesarus for " + cStringQuery);
+
   }
 
   else if (cString.indexOf('medical ')  > -1){
     cStringQuery = cString.replace('medical ', '');
     openInNewTab("http://www.merriam-webster.com/medical/" + cStringQuery);
+    logToConsole("Searched Merriam Webster Medical for " + cStringQuery);
+
   }
 
   else if (cString.indexOf('concise ')  > -1){
     cStringQuery = cString.replace('concise ', '');
     openInNewTab("http://www.merriam-webster.com/concise/" + cStringQuery);
+    logToConsole("Searched Merriam Webster Concise for " + cStringQuery);
   }
 
   else if (cString.indexOf('youtube ')  > -1){
     cStringQuery = cString.replace('youtube ', '');
     openInNewTab("http://www.youtube.com/results?search_query=" + cStringQuery);
+    logToConsole("Searched Youtube for " + cStringQuery);
   }
 
   else if (cString.indexOf('pandora ')  > -1){
     cStringQuery = cString.replace('pandora ', '');
     openInNewTab("http://www.pandora.com/search/" + cStringQuery);
+    logToConsole("Searched Pandora for " + cStringQuery);
   }
 
   else if (cString.indexOf('wiki ')  > -1){
     cStringQuery = cString.replace('wiki ', '');
     openInNewTab("http://en.wikipedia.org/w/index.php?t&search=" + cStringQuery);
+    logToConsole("Searched Wikipedia for " + cStringQuery);
   }
 
   else if (cString.indexOf('wikipedia ')  > -1){
     cStringQuery = cString.replace('wikipedia ', '');
     openInNewTab("http://en.wikipedia.org/w/index.php?t&search=" + cStringQuery);
+    logToConsole("Searched Wikipedia for " + cStringQuery);
   }
 
   else if (cString.indexOf('etsy ') > -1){
     cStringQuery = cString.replace('etsy ', '');
     openInNewTab("https://www.etsy.com/search?q=" + cStringQuery);
+    logToConsole("Searched Etsy for " + cStringQuery);
   }
 
   else if (cString.indexOf('amazon ') > -1){
     cStringQuery = cString.replace('amazon ', '');
     openInNewTab("http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=" + cStringQuery);
+    logToConsole("Searched Amazon for " + cStringQuery);
   }
 
   else if (cString.indexOf('reddit ') > -1){
     cStringQuery = cString.replace('reddit ', '');
     openInNewTab("http://www.reddit.com/search?q=" + cStringQuery);
+    logToConsole("Searched Reddit for " + cStringQuery);
   }
 
   else if (cString.indexOf('tumblr ') > -1){
     cStringQuery = cString.replace('tumblr ', '');
     openInNewTab("https://www.tumblr.com/search/" + cStringQuery);
+    logToConsole("Searched Tumblr for " + cStringQuery);
   }
 
   else if (cString.indexOf('facebook ') > -1){
     cStringQuery = cString.replace('facebook ', '');
     openInNewTab("https://www.facebook.com/search/more/?q=" + cStringQuery);
+    logToConsole("Searched Facebook for " + cStringQuery);
+
   }
   
   else if (cString.indexOf('twitter ') > -1){
     cStringQuery = cString.replace('twitter ', '');
     openInNewTab("https://twitter.com/search?q=" + cStringQuery);
+    logToConsole("Searched Twitter for " + cStringQuery);
+
   }
 
   else if (cString.indexOf('wolfram ') > -1){
@@ -605,69 +642,83 @@ function openBlankTab() { //literally just opens a new tab
     cStringQuery = cString.replace('wolfram ', '');
     cStringQuery = cString.replace('+', '--');
     openInNewTab("http://www.wolframalpha.com/input/?i=" + cStringQuery);
+    logToConsole("Performed operation on Wolfram Alpha: " + cStringQuery);
+
   }
 
   else if (cString.indexOf('ikea ') > -1){
     cStringQuery = cString.replace('ikea ', '');
     openInNewTab("http://www.ikea.com/us/en/search/?query=" + cStringQuery);
+    logToConsole("Searched Ikea for " + cStringQuery);
   }
 
   else if (cString.indexOf('github ') > -1){
     cStringQuery = cString.replace('github ', '');
     openInNewTab("https://github.com/search?q=" + cStringQuery);
+    logToConsole("Searched GitHub for " + cStringQuery);
   }
 
   else if (cString.indexOf('imgur ') > -1){
     cStringQuery = cString.replace('imgur ', '');
     openInNewTab("http://imgur.com/search?q=" + cStringQuery);
+    logToConsole("Searched Imgur for " + cStringQuery);
   }
 
   else if (cString.indexOf('urban ') > -1){
     cStringQuery = cString.replace('urban ', '');
     openInNewTab("http://www.urbandictionary.com/define.php?term=" + cStringQuery);
+    logToConsole("Searched Urban Dictionary for " + cStringQuery);
   }
 
   else if (cString.indexOf('urbandictionary ') > -1){
     cStringQuery = cString.replace('urbandictionary ', '');
     openInNewTab("http://www.urbandictionary.com/define.php?term=" + cStringQuery);
+    logToConsole("Searched Urban Dictionary for " + cStringQuery);
   }
 
   else if (cString.indexOf('flippa ') > -1){
     cStringQuery = cString.replace('flippa ', '');
     openInNewTab("https://flippa.com/buy/search?q=" + cStringQuery);
+    logToConsole("Searched Flippa for " + cStringQuery);
   }
 
   else if (cString.indexOf('stock ') > -1){
     cStringQuery = cString.replace('stock ', '');
     openInNewTab("http://finance.yahoo.com/lookup;_ylc=X3oDMTFwazVkanJnBGtleXcDeW8EbWlkA21lZGlhcXVvdGVzc2VhcmNoBHNlYwNnZXRxdW90ZXNidG4Ec2xrA2xvb2t1cA--?s=" + cStringQuery);
+    logToConsole("Searched Yahoo Finance for Symbol " + cStringQuery);
   }
 
   else if (cString.indexOf('weather') > -1){
     //cStringQuery = cString.replace('weather ', '');
     //openInNewTab("https://flippa.com/buy/search?q=" + cStringQuery);
     openInNewTab("https://weather.yahoo.com/");
+    logToConsole("Looked up the weather on Yahoo");
   }
 
   else if (cString.indexOf('zillow ') > -1){
     cStringQuery = cString.replace('zillow ', '');
     //openInNewTab("https://flippa.com/buy/search?q=" + cStringQuery);
-    openInNewTab("https://weather.yahoo.com/");
+    openInNewTab("https://zillow.com/homes/" + cStringQuery + "_rb");
+    logToConsole("Searched Zillow for " + cStringQuery);
   }
 
   else if (cString.indexOf('visit ') > -1){
     cStringQuery = cString.replace('visit ', '');
     ///consider parsing!
     openInNewTab(cStringQuery);
+    logToConsole("Visited " + cStringQuery);
   }
 
   else if (cString.indexOf('refresh') > -1){
     //refreshes everything??
     location.reload(true);
+    logToConsole("Refreshed the page");
   }
 
   else if (cString.indexOf('reload') > -1){ //should reload masonry/isotope container
     //refreshes everything??
     location.reload(true);
+    logToConsole("Reloaded the page");
   }
 
   else if (cString.indexOf('select ') > -1){
@@ -689,14 +740,23 @@ function openBlankTab() { //literally just opens a new tab
       for (var i = 0; i < selectedIds.length; i++){
         if (selectedIds[i] == $(currentElement).attr('id')){
           selectedIds.pop($(currentElement).attr('id')); 
+          logToConsole("Deselected " + currentElement);
         }
       }     
     }
     else{
-      $(currentElement).prepend("<div class='highlight'> </div>");
-      $(".highlight", currentElement).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '2px'}, 160, "linear")
-      };
+      if ($(currentElement).length > 0){
+        $(currentElement).prepend("<div class='highlight'> </div>");
+        $(".highlight", currentElement).css({"border": "0px solid #f1c40f"}).animate({'borderWidth': '2px'}, 160, "linear");
+        logToConsole("Selected " + currentElement);
+      }
+      else{
+        logToConsole("Unable to select " + currentElement);
+      }
+      
+      }
       selectedIds.push($(currentElement).attr('id'));  //this doesn't work for "all"
+
 
       cStringQuery = cStringQuery.replace(currentElementTemp, '');
       cStringQuery = cStringQuery.trim();
@@ -704,49 +764,55 @@ function openBlankTab() { //literally just opens a new tab
   }  
 
   else if (cString.indexOf('toggle ids') > -1 || cString.indexOf('ids') > -1 || cString.indexOf('show ids') > -1){
-    toggleIds();
+    toggleIds(); //good
   }
 
   else if (cString.indexOf('interact') > -1 || cString.indexOf('interaction') > -1){
     toggleInteractionMode();
+    logToConsole("Entered Interaction Mode");
   }
 
   else if (cString.indexOf('selection') > -1 || cString.indexOf('select') > -1){
     toggleSelectionMode();
+    logToConsole("Entered Selection Mode");
   }
 
   else if (cString.indexOf('delete') > -1 || cString.indexOf('del') > -1 || cString.indexOf('remove') > -1 || cString.indexOf('rm') > -1){
-    deleteDisplay();
+    deleteDisplay(); //good
   }
 
   else if (cString.indexOf('gui') > -1){
     toggleGUI();
+    logToConsole("Toggled GUI");
   }
 
   else if (cString.indexOf('console') > -1){
     toggleConsole();
+    logToConsole("Toggled GUI");
   }
 
   else if (cString.indexOf('tab') > -1){ //just opens a blank tab, doesn't focus on it
     openBlankTab();
+  logToConsole("Opened new tab");
   }
 
   else if (cString.indexOf('split') > -1 || cString.indexOf('spl') > -1){ //just opens a blank tab, doesn't focus on it
     split();
   }
 
-  else if (cString.indexOf('merge') > -1){ //just opens a blank tab, doesn't focus on it
-    cString.replace('merge', '');
+  else if (cString.indexOf('merge') > -1){ //Mergem
+    cString = cString.replace('merge', '');
     if (cString.indexOf('m') > -1 || cString.indexOf('mult') > -1 || cString.indexOf('multiply') > -1){
+      console.log("multiplied");
+      console.log(cString);
       merge("Multiply");
     }
-    else{ 
+    else{ // Mergel
       //if (cString.indexOf('l') > -1 || cString.indexOf('largest') > -1){
+        console.log("largest");
       merge("Largest");
     }
   }
-
-  //UPDATE SHOWS IDS
 
 
  }
