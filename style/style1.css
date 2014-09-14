@@ -7,19 +7,20 @@
        margin-bottom: 56px;
 }
 
-#infoText{
+
+
+#infotext{
   background-color: #2C3E50;
   color: #ECF0F1;
   font-family: 'Lato', sans-serif;
   font-weight: 100; 
-  padding: 5px;
 }
-#infoText h2{
+#infotext h2{
   font-family: 'Lato', sans-serif;
   font-weight: 100; 
 }
 
-#infoText h1{
+#infotext h1{
   font-family: 'Lato', sans-serif;
   font-weight: 100; 
   font-size: 300%;
@@ -28,7 +29,7 @@
   margin-bottom: 10;
 }
 
-#infoText span{
+#infotext span{
   font-family: 'Lato', sans-serif;
   font-weight: 400; 
 }
@@ -57,6 +58,10 @@
   margin: 0;
   padding: 10px;
 
+}
+
+.page-header h6 span{
+  padding: 0px 10px;
 }
 
 .lead{
@@ -114,6 +119,7 @@
   /*width: 100%;*/
    font-family: 'Lato', sans-serif;
  font-weight: 400; 
+ color: #333;
   background-color: #ecf0f1;
   position: absolute;
   /*opacity: .7;*/

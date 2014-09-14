@@ -12,6 +12,7 @@ $(document).ready( function ()
     var commandHistory = [];
 
     var mode = "interaction"; //selection or interaction
+    var idBannersOn = false;
     
   var isActive = true;
   //var resize = "large";
@@ -27,12 +28,14 @@ $(document).ready( function ()
 
   function appendDisplay(content){
     $("#grid").append("" + content);
+    $("#grid").packery('appended', content);
     bindDragabillyToElement('.display');
     reloadGrid();
   }
 
   function prependDisplay(content){
     $("#grid").prepend("" + content);
+    $("#grid").packery('prepended', content);
     bindDragabillyToElement('.display');
     reloadGrid();
   }
@@ -113,20 +116,37 @@ $( "#largeSquareButton" ).on( "click",   function() {
       deleteDisplay();
 });
 
-  $(".page-header h6 span").on( "click", function() {
+  $("#what").on( "click", function() {
+   if ($("#infotext").length>0){
+       $("#infotext").remove();
+    }
+   prependDisplay("<div id='infotext' class='display'><h2>An API Playground. A Supercharged Search Bar.</h2><span>Disploy is an experimental web app designed to make your browsing experience more efficient. We crave access to information much faster than we can search and sort through it. Disploy puts everything in one place and provides powerful tools so you can find, organize, manipulate content exactly how you'd like to. Additional API support is rapidly being added, and, even if you don't know what an API is, Disploy will make your life (or at least your internet life, which happens to be a significant component of mine) easier.</span><h2>Display && Deploy == Disploy</h2><span>Using the Command Line Interface (CLI) facilitates rapid deployment of modules, called displays or display tiles. The content within tiles can be further manipulated using display commands. Disploy, the portmanteau of Display and Deploy, can be used to do even more including querying the search engines of about 50 different websites.</span><h2>Open Source and Free (For Everyone)</h2><span>The built-in search function was inspired by <a href=\"http://sparktab.net\">SparkTab</a>, a project completed by a group of legendary Lehigh students at Penn Apps. I am a proponent of open source and think it will be an important part of Disploy's ongoing development. Let's work together.</span><h1>Contact Me</h1><span>This might be the first time in my life where I can say 'we need to talk' and be taken seriously. Please excuse my sophmoric banter- we <i>should</i> talk if you're at all interested in this project or, for some miraculous reason, me. You can email me at TJO216@Lehigh.edu. Use a descriptive title- I receive an awful lot of unsolicited stock tips.</span></div>");
+    $("#infotext").width(600 + (marginSize * 4));
+    $("#infotext").height(600 + (marginSize * 5));
+
+    reloadGrid();
+  });
+  
+  $("#how").on( "click", function() {
    //var text = "Glad you asked."
-   if ($("#infoText").length>0){
-      $("#infoText").remove();
+   if ($("#infotext").length>0){
+      $("#infotext").remove();
    }
 
-   $("#grid").prepend("<div id='infoText' class='display'><h1>Glad you asked.</h1><span>Disploy is a portmanteau of the words Display and Deploy. I originally conceived this idea as a feature in a graphical math game I was developing. I planned to implement a secret developer console to interact with and manipulate the elements of the game. </span><span>As I gave the concept more thought, I ditched the math game completely and became obsessed with the idea of a developer console built for <i>for developers</i>- A command line interface (CLI) within a website that could be used to work with different APIs. </span><h2>An API playground. A Supercharged Search Bar.</h2><span>I found my first real inspiration in SparkTab, which was developed by a legendary team from Lehigh University at PennApps in Spring 2013. My intended function and their end-product overlapped somewhat, and what they were able to accomplish in 40 hours served as a proof-of-concept. Disploy's multitude of features can be used by the technically adept as well as those just looking to innovate their web browsing experience.</span><h2>Enough Talk. Learn how to use Disploy.</h2><span>The Command Line included on this website isn't as difficult to use as the one that came preinstalled on your desktop. The command syntax, which I call Disploy Logic, attempts to mimic natural language. It's as simple as using a search bar. Display modifies existing tiles, deploy creates new ones, and disploy supports admin features and much of the functionality of sparktab. A quick peek at the guide and you'll be good to go. And if the feature you're looking for doesn't exist-</span><h2>It will soon. Disploy is open source.</h2><span>I want people around the world to be able to contribute to this project. If the github repository isn't available at the time you're reading this, fear not- it will be soon. I'm probably in the process of organizing and documenting my code.</span><h2>Contact me.</h2><span>This might be the first time in my life where I can say 'We Need to Talk' and be taken seriously. Please excuse my sophmoric banter- we <i>should</i> talk if you're at all interested in this project or, by some miracle, me. You can email me at TJO216@Lehigh.edu. Use a descriptive title- I get an awful lot of unsolicited stock tips.</span></div>");
-    $("#infoText").width(590 + (marginSize * 4));
-    $("#infoText").height(790 + (marginSize * 6));
+   $("#grid").prepend("<div id='infotext' class='display'><h1>Disploy.</h1>");
+    $("#infotext").width(590 + (marginSize * 4));
+    $("#infotext").height(790 + (marginSize * 6));
 
     //$("#about").css('background-color', '#2C3E50');
     //t.masonry('reload');
     reloadGrid();
-});
+  });
+
+  $("#fork").on( "click", function(){
+   openInNewTab("https://github.com/aJetHorn/Disploy");
+   logToConsole("Check Disploy out on GitHub!");
+   logToConsole("To go back, try 'visit https://github.com/aJetHorn/Disploy'");
+  });
     
 $(document).on( "click", ".display", function() {
   if (mode === "interaction"){
@@ -159,6 +179,7 @@ $(document).on( "click", ".display", function() {
   
   function toggleIds(){
     var messageLogged = false; //this is sloppy, consider refactoring
+    idBannersOn = !idBannersOn;
     $( "div.display" ).each(function( index ) {
       //appened class
       
@@ -425,11 +446,11 @@ function openBlankTab() { //literally just opens a new tab
     alert("display");
     //do something..
   }
-  else if (cString.length >= 6 && cString.substring(0,5) == "deploy"){
-    alert("deploy");
-    //deploy!
+  else if (cString.length >= 6 && cString.substring(0,6) == "deploy"){ //create new tiles!
+    cString = cString.substring(7);
+    deployParser(cString);
   }
-  else{
+  else{ //these are default commands, notice disploy is not needed
     if (cString.length >= 6 && cString.substring(0,7) == "disploy"){
       //alert("cString before: " + cString);
       cString = cString.substring(8);
@@ -803,17 +824,101 @@ function openBlankTab() { //literally just opens a new tab
   else if (cString.indexOf('merge') > -1){ //Mergem
     cString = cString.replace('merge', '');
     if (cString.indexOf('m') > -1 || cString.indexOf('mult') > -1 || cString.indexOf('multiply') > -1){
-      console.log("multiplied");
-      console.log(cString);
+      logToConsole("Merged by multiplying tile dimensions");
       merge("Multiply");
     }
     else{ // Mergel
-      //if (cString.indexOf('l') > -1 || cString.indexOf('largest') > -1){
-        console.log("largest");
+      logToConsole("Merged and preserved largest tile dimensions");
       merge("Largest");
     }
   }
+ } //end of function
 
+ function deployParser(cString){
+  var prepend = true;
+  var tileType = "default";
+  var id = idNumber;
+  var content = "<div id='" + id + "' class='display'></div>";
+  var width = 200;
+  var height = 200;
+
+  if (cString.indexOf('help') > -1){
+    logToConsole("How to Deploy new tiles:");
+    logToConsole("deploy {[append] | [prepend]} {tile | photo URL | iframe URL | youtube URL} [#id] {[width/height] | [width] [height]}");
+    logToConsole("Type deploy, then type \'append\' if you'd like the tile to appear in the front, or \'prepend\'' if you'd like it to be added to the end (this is optional)");
+    logToConsole("Next, think about what type of tile you'd like to deploy. Tile is a blank one while photo, iframe, and youtube require URLS");
+    logToConsole("If you'd like to add a non-sequential id, type an id, starting with #");
+    logToConsole("You can also specify dimensions. Default is 200 * 200. Specify one number for a square with all sides that length, or two for a rectangle");
+    logToConsole("Feel free to change any of this later using the \'display\' command!");
+  }
+  if (cString.indexOf('append') > -1){
+    prepend = false;
+    cString = cString.replace('append ', '');
+  }
+  else if (cString.indexOf('prepend') > -1){
+    cString = cString.replace('prepend ', '');
+  }
+  if (cString.indexOf('tile') > -1){
+    cString = cString.replace('tile ', '');
+    var tokens = cString.split(" ");
+    var currentToken = tokens[0];
+    if (currentToken.charAt(0) == '#'){
+      id = currentToken.substring(1);
+      content = "<div id='" + id + "' class='display'></div>";
+      cString = cString.replace(currentToken, '');
+      cString = cString.trim();
+      console.log(cString);
+      tokens = cString.split(" ");
+    }
+    if (tokens.length == 2){ //create it with certain dimensions
+      width = tokens[0];
+      height = tokens[1];
+      console.log(tokens[0]);
+      console.log(tokens[1]);
+    }
+    else if (tokens.length == 1){
+      console.log(tokens[0]);
+      width = tokens[0];
+      height = width;
+    }
+    else if (tokens.length != 0){
+      logToConsole(tokens.length);
+      logToConsole(cString);
+      logToConsole("Too many arguments");
+    }
+    content = "<div id='" + id + "' style='width: " + width + "px; height: " + height + "px;' class='display'></div>";
+    //console.log(content);
+    //logToConsole("content:" + content);
+
+  }
+  else if (cString.indexOf('photo') > -1){ //as more are added, they will be more specialized
+    cString = cString.replace('photo', '');
+    tileType = "photo";
+  }
+  else if (cString.indexOf('img') > -1){
+    cString = cString.replace('img', '');
+    tileType = "photo";
+  }
+  else if (cString.indexOf('iframe') > -1){
+    cString = cString.replace('iframe', '');
+    tileType = "iframe";
+  }
+  else if (cString.indexOf('youtube') > -1){
+    cString = cString.replace('youtube', '');
+    tileType = "youtube";
+  }
+
+  if (prepend){
+    prependDisplay(content); 
+  }
+  else{ //append
+    appendDisplay(content);
+  }
+  if (idBannersOn){
+      $("#" + id).prepend("<div class='idBanner'>" + $("#" + id).attr('id') + "</div>");
+    } 
+  idNumber++;
+ 
 
  }
 
