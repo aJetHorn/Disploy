@@ -121,8 +121,12 @@ $( "#largeSquareButton" ).on( "click",   function() {
        $("#infotext").remove();
     }
    prependDisplay("<div id='infotext' class='display'><h2>An API Playground. A Supercharged Search Bar.</h2><span>Disploy is an experimental web app designed to make your browsing experience more efficient. We crave access to information much faster than we can search and sort through it. Disploy puts everything in one place and provides powerful tools so you can find, organize, manipulate content exactly how you'd like to. Additional API support is rapidly being added, and, even if you don't know what an API is, Disploy will make your life (or at least your internet life, which happens to be a significant component of mine) easier.</span><h2>Display && Deploy == Disploy</h2><span>Using the Command Line Interface (CLI) facilitates rapid deployment of modules, called displays or display tiles. The content within tiles can be further manipulated using display commands. Disploy, the portmanteau of Display and Deploy, can be used to do even more including querying the search engines of about 50 different websites.</span><h2>Open Source and Free (For Everyone)</h2><span>The built-in search function was inspired by <a href=\"http://sparktab.net\">SparkTab</a>, a project completed by a group of legendary Lehigh students at Penn Apps. I am a proponent of open source and think it will be an important part of Disploy's ongoing development. Let's work together.</span><h1>Contact Me</h1><span>This might be the first time in my life where I can say 'we need to talk' and be taken seriously. Please excuse my sophmoric banter- we <i>should</i> talk if you're at all interested in this project or, for some miraculous reason, me. You can email me at TJO216@Lehigh.edu. Use a descriptive title- I receive an awful lot of unsolicited stock tips.</span></div>");
-    $("#infotext").width(600 + (marginSize * 4));
-    $("#infotext").height(600 + (marginSize * 5));
+   
+    if (idBannersOn){
+      $("#infotext").prepend("<div class='idBanner'>infotext</div>");
+    } 
+   $("#infotext").width(600 + (marginSize * 4));
+   $("#infotext").height(600 + (marginSize * 5));
 
     reloadGrid();
   });
@@ -133,7 +137,10 @@ $( "#largeSquareButton" ).on( "click",   function() {
       $("#infotext").remove();
    }
 
-   $("#grid").prepend("<div id='infotext' class='display'><h1>Disploy.</h1>");
+   $("#grid").prepend("<div id='infotext' class='display'><h1>Disploy.</h1><span>Tutorial coming soon</span>");
+    if (idBannersOn){
+      $("#infotext").prepend("<div class='idBanner'>infotext</div>");
+    } 
     $("#infotext").width(590 + (marginSize * 4));
     $("#infotext").height(790 + (marginSize * 6));
 
