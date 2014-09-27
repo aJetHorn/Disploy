@@ -8,6 +8,7 @@ $(document).ready( function ()
     var lineNumber = 5;
 
     var currentHistoryIndex = 0;
+    var stockName = "";
 
     var commandHistory = [];
 
@@ -865,7 +866,7 @@ function openBlankTab() { //literally just opens a new tab
   else if (cString.indexOf('prepend') > -1){
     cString = cString.replace('prepend ', '');
   }
-  if (cString.indexOf('tile') > -1){
+  if (cString.indexOf('tile') > -1){ //I know this code is terrible, still trying to make sure everything works
     cString = cString.replace('tile ', '');
     var tokens = cString.split(" ");
     var currentToken = tokens[0];
@@ -896,7 +897,6 @@ function openBlankTab() { //literally just opens a new tab
     content = "<div id='" + id + "' style='width: " + width + "px; height: " + height + "px;' class='display'></div>";
     //console.log(content);
     //logToConsole("content:" + content);
-
   }
   else if (cString.indexOf('photo') > -1){ //as more are added, they will be more specialized
     cString = cString.replace('photo', '');
@@ -914,19 +914,103 @@ function openBlankTab() { //literally just opens a new tab
     cString = cString.replace('youtube', '');
     tileType = "youtube";
   }
+  else if (cString.indexOf('stock') > -1){ //REally sloppy, clean up!
+    var currentToken;
 
-  if (prepend){
+    cString = cString.replace('stock', '');
+    cString = cString.trim();
+    tileType = "stock";
+    var tokens = cString.split(" ");
+    if (tokens == undefined){
+      tokens = cString;
+      currentToken = cString.toUpperCase();
+    }
+    else{
+      currentToken = tokens[0].toUpperCase();
+
+    }
+    //console.log("tokens size: " + tokens.size);
+
+    stockName = currentToken; //testing purposes
+
+    getQuandlData(function(data) { //asynch
+      var open = data.data[0][1];
+      var close = data.data[0][4];
+      var percentChange = (100 - (open / close) * 100);
+      var volume = data.data[0][5];
+      content = "<span style='font-size: 30px; text-decoration: underline;'>" + currentToken + "</span><br>";
+      //content += "<span>Date: " + open + "</span>"; Leave this out until you decide on syntax
+      content += "<span style='font-size: 20px;'>Open: " + open + "</span><br>";
+      content += "<span style='font-size: 20px;'>Close: " + close + "</span><br>";
+      content += "<span style='font-size: 20px;'>Change: " + percentChange.toFixed(5) + "%</span><br>";
+      content += "<span style='font-size: 20px;'>Volume: " + volume + "</span>";
+
+      cString = cString.replace(tokens[0], '');
+      cString = cString.trim();
+      tokens = cString.split(" ");
+
+      for (var i = 0; i < tokens.length; i++){
+        console.log(i + ": " + tokens[i]);
+      }
+
+    if (tokens.length == 2){ //create it with certain dimensions
+      width = tokens[0];
+      height = tokens[1];
+      console.log(tokens[0]);
+      console.log(tokens[1]);
+    }
+    else if (tokens.length == 1){
+      console.log(tokens[0]);
+      width = tokens[0];
+      height = width;
+    }
+    content = "<div id='" + id + "' style='width: " + width + "px; height: " + height + "px;' class='display'>" + content + "</div>";
+    if (prepend){
+      prependDisplay(content); 
+    }
+    else{ //append
+      appendDisplay(content);
+  }
+  logToConsole("Deployed stock " + currentToken);
+    })
+  }
+
+  if (prepend && tileType != "stock"){
     prependDisplay(content); 
   }
-  else{ //append
+  else if (tileType != "stock"){ //append
     appendDisplay(content);
   }
   if (idBannersOn){
       $("#" + id).prepend("<div class='idBanner'>" + $("#" + id).attr('id') + "</div>");
     } 
   idNumber++;
- 
 
  }
+
+ //Quandl section before moved to different file ---
+  function getQuandlData(callback){
+    //console.log(data);
+    var urlContent = "datasets/WIKI/" + stockName + ".json";
+    var URL = buildQuandlURL(urlContent, "");
+    getQuandlObject(URL, function(data) {
+      callback(data);
+    });
+  }
+
+    function getQuandlObject(URL, callback){ //error checking...
+    //https://www.quandl.com/api/v1/datasets/WIKI/AAPL.json?auth_token=VEUT87tRgmysCmNqsAfS
+    $.getJSON( URL, function( data ) {
+        callback(data);
+    })
+  }
+    function buildQuandlURL(content, trail){ //Won't work with all cases
+      var auth_token = "VEUT87tRgmysCmNqsAfS";
+      var auth_token_url = "?auth_token=" + auth_token;
+      var base_url = "https://www.quandl.com/api/v1/";
+    return base_url + content + auth_token_url + trail;
+  }
+
+  //end Quandl methods
 
 })
