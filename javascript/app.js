@@ -132,6 +132,7 @@ $(document).ready( function () {
   
   $("#how").on( "click", function() {
    //var text = "Glad you asked."
+   openInNewTab("https://github.com/aJetHorn/Disploy/Readme.md");
    if ($("#infotext").length>0){
       $("#infotext").remove();
    }
