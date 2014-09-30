@@ -658,6 +658,7 @@ $(document).ready( function () {
     } else if (cString.indexOf('js ') > -1){ //evaluates javascript.. could be dangerous?
       cStringQuery = cString.replace('js ', '');
       eval(cStringQuery);
+      logToConsole("Evaluated Javascript code " + cStringQuery);
     } else if (cString.indexOf('select ') > -1){
       //select by id or class
       cStringQuery = cString.replace('select ', ''); //this will just contain ids now
