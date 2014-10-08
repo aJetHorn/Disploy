@@ -439,9 +439,11 @@ $(document).ready( function () {
     }
     logToConsole(cString); 
 
-    if (cString.length >= 6 && cString.substring(0,5) == "display"){
-      alert("display");
-      //do something..
+    if (cString.length >= 6 && cString.substring(0,7) == "display"){
+      
+      //Under development
+      cString = cString.substring(8);
+      displayParser(cString); //Started 10/8/14 for sizing, mainly
     } else if (cString.length >= 6 && cString.substring(0,6) == "deploy"){ //create new tiles!
       cString = cString.substring(7);
       deployParser(cString);
@@ -469,6 +471,50 @@ $(document).ready( function () {
 
     $("#console").append("<span style=\"margin-left:" + leftMarginAmt + "\">" + lineNumber++ + spaceString + cString +  "</span><br>");
     $("#console").scrollTop(1500); //this is a hack to auto scroll to bottom
+  }
+
+  function displayParser(cString){
+    var byID = false;
+    var currentId;
+    //for now, "selected" vs id
+    if (cString.indexOf('id ') > -1){
+      byID = true;
+      cString = cString.replace('id ', '');
+      currentId = cString.split(" ")[0];
+      console.log(currentId);
+      cString = cString.replace(currentId + ' ', '');
+      if (currentId.indexOf('#') < 0){
+        currentId = "#" + currentId;
+      }
+    }
+    if (cString.indexOf('size ') > -1){
+      var length;
+      var width;
+      cString = cString.replace('size ', '');
+      console.log(cString);
+      var tokens = cString.split(" ");
+      if (tokens.length == 2){
+        length = tokens[0];
+        width = tokens[1];
+      }
+      else if (tokens.length == 1){
+        length = tokens[0];
+        width = tokens[0];
+      }
+      else{
+        logToConsole("Invalid number of arguments");
+      }
+
+      if (byID){
+        $(currentId).width(width);
+        $(currentId).height(length);
+        reloadGrid();
+      }
+      else{
+        resize(width, length);
+      }
+
+    }
   }
 
   function disployParser(cString){
