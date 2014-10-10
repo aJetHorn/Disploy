@@ -137,7 +137,7 @@ $(document).ready( function () {
       $("#infotext").remove();
    }
 
-   $("#grid").prepend("<div id='infotext' class='display'><h1>Disploy.</h1><span>Tutorial coming soon</span>");
+   $("#grid").prepend("<div id='infotext' class='display'><h1>Disploy.</h1><span>Try: 'select infotext', 'remove'</span>");
    if (idBannersOn){
      $("#infotext").prepend("<div class='idBanner'>infotext</div>");
    } 
