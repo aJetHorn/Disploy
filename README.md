@@ -12,6 +12,13 @@ Website synced with gh-pages branch at [aJetHorn.github.io/Disploy](aJetHorn.git
 
 ![Mou icon](https://avatars3.githubusercontent.com/u/3619262?v=2&s=180)
 
+##TODO
+
+* OO Tile Design
+* Lexer/Tokenizer
+* More APIs
+* General Refactoring
+
 ## Disploy Guide
 
 Disploy commands fall under three categories: 
