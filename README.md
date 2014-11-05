@@ -8,6 +8,9 @@ Aims to facilitate the display, deployment, and aggregation of web content in a 
 
 Website synced with gh-pages branch at [aJetHorn.github.io/Disploy](aJetHorn.github.io/Disploy)
 
+####Version Notes
+This is a pre-launch, proof-of-concept version of Disploy. It has basic functionality but requires a significant overhaul before it is suitable for large-scale development. Development has stalled and will resume over my Thanksgiving break.
+
 ## A Project by Tim O'Hearn
 
 ![Mou icon](https://avatars3.githubusercontent.com/u/3619262?v=2&s=180)
@@ -31,6 +34,13 @@ Tiles, or displays, can also be manipulated by clicking and dragging them. Displ
 	* Stock market data
 	* Bitcoin data
 	* More coming soon
+
+## TODO
+* Modularization
+* Parser
+* Objects
+* Polish UI
+
 
 ## Disploy Commands
 #### Description:
