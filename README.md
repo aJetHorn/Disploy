@@ -65,6 +65,10 @@ Disploy commands don't clearly fit into tile manipulation or deployment. There a
 	* Merge m multplies tile dimensions
 	* Merge l sets tile to the largest dimension 
 	* Currently, the largest tile's source is preserved
+* Split | spl
+	* splits a tile into 4 smaller tiles with identical sources
+* Clone | Copy [number]
+	* Creates [number] duplicates of tile with identical dimensions and source
 
 ####Search Queries:
 These command will open search results in a new tab
