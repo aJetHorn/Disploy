@@ -250,7 +250,6 @@ $(document).ready( function () {
         $(currentId).height(height);
         $("div.highlight", currentId).remove();
       }
-      //t.masonry('reload');
       reloadGrid();
     }
     selectedIds = [];
@@ -289,6 +288,42 @@ $(document).ready( function () {
           idNumber++;
           reloadGrid();
           //refreshIds();
+        }
+      }
+    }
+    selectedIds = [];
+  }
+
+  function clone(numClones){ //duplicates a tile
+    for (var i = 0; i < selectedIds.length; i++){
+      var currentId = "#" + selectedIds[i];
+      if ($(currentId).length <= 0){
+        alert("id doesn't exist");
+      } else{
+        logToConsole("Cloned " + currentId);
+        var width = $(currentId).width();
+        var height = $(currentId).height();
+        removeIdBanner(currentId); //should remove id.. should eliminate problems
+        var html = $(currentId).html() + "";
+
+        $("div.highlight", currentId).remove();
+
+        for (var j = 0; j < numClones; j++){ //sloppy, I know, add # of clones function later
+          //$("#grid").prepend("<div id='" + idNumber + "' class='display'></div>");
+          prependDisplay("<div id='" + idNumber + "' class='display'></div>");
+          $("#" + (idNumber)).width(width);
+          $("#" + (idNumber)).height(height);
+          $("#" + (idNumber)).append(html);
+          $("div.highlight", "#" + idNumber).remove();
+
+          if ($("div.idBanner", "#" + idNumber).length > 0){
+            $("div.idBanner", "#" + idNumber).remove();
+            $("#" + idNumber).prepend("<div class='idBanner'>" + $("#" + idNumber).attr('id') + "</div>");
+            logToConsole("Created " + idNumber);
+          }
+
+          idNumber++;
+          reloadGrid();
         }
       }
     }
@@ -763,6 +798,14 @@ $(document).ready( function () {
       logToConsole("Opened new tab");
     } else if (cString.indexOf('split') > -1 || cString.indexOf('spl') > -1){ //just opens a blank tab, doesn't focus on it
       split();
+    } else if (cString.indexOf('clone') > -1 || cString.indexOf('copy') > -1){
+      cString = cString.replace('clone', '');
+      var numClones = 1;
+      console.log(parseInt(cString));
+      if (parseInt(cString) > 0){
+        numClones = parseInt(cString);
+      }
+      clone(numClones);
     } else if (cString.indexOf('merge') > -1){ //Mergem
       cString = cString.replace('merge', '');
       if (cString.indexOf('m') > -1 || cString.indexOf('mult') > -1 || cString.indexOf('multiply') > -1){
